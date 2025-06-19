@@ -170,14 +170,50 @@ testOptimizedSort         avgt   10   0.050 ± 0.005  ms/op
 
 ## 5. Results and Comparison
 
+![./images/testbubblesort.png](./images/testbubblesort.png)
+
+![./images/testoptimisedsort.png](./images/testoptimisedsort.png)
+
+![./images/all-perfo.png](./images/all-perfo.png)
+
+
 | Version         | Benchmark Score (ms/op) | Notes                       |
 |----------------|-------------------------|-----------------------------|
-| Bubble Sort    | (your result)           | Baseline, very slow         |
-| Arrays.sort()  | (your result)           | Optimized, much faster      |
+| Bubble Sort    | refer to img            | Baseline, very slow         |
+| Arrays.sort()  | refer to img            | Optimized, much faster      |
 
-- Attach JProfiler screenshots or notes here.
-- Summarize what bottlenecks were found and how they were fixed.
+- summary table
 
+| Metric                          | `testBubbleSort`    | `testOptimizedSort`   |
+| ------------------------------- | ------------------- | --------------------- |
+| **Throughput (ops/s)**          | 1,233.99 ops/s      | 56,620.52 ops/s       |
+| **Error Margin (99.9%)**        | ±65.45 ops/s        | ±7,427.86 ops/s       |
+| **Min Throughput**              | 910.96 ops/s        | 37,634.09 ops/s       |
+| **Max Throughput**              | 1,309.72 ops/s      | 74,461.33 ops/s       |
+| **Standard Deviation**          | 87.38               | 9,915.98              |
+| **Confidence Interval (99.9%)** | \[1168.54, 1299.44] | \[49192.66, 64048.38] |
+
+
+### 🔍 Analysis
+- ✅ 1. Performance 
+    - `testOptimizedSort` is dramatically faster — `~45.9x` more throughput than `testBubbleSort`. 
+    - This aligns with expectations: bubble sort is `O(n²)`, and optimized sorts are typically `O(n log n)`.
+
+- ⚖️ 2. Stability / Variability 
+  - Standard deviation:
+    - testBubbleSort: `87.38 ops/s` → `~7%` variability `(87.38 / 1233.99)`. 
+      - testOptimizedSort: `9915.98 ops/s` → `~17.5%` variability.
+    - This indicates the optimized sort has higher variance across runs.
+
+- 🧪 3. Confidence Interval (CI)
+  - Both benchmarks report 99.9% CI, showing a narrow spread:
+    - Bubble Sort: [1168.54, 1299.44] → ±5.1% 
+    - Optimized Sort: [49192.66, 64048.38] → ±13% 
+  - Still, even the lower bound of the optimized sort is ~40x faster than the upper bound of bubble sort
+
+- 💡 4. Interpretation 
+  - The results strongly favor testOptimizedSort in terms of raw throughput. 
+  - The optimized sort is more performant even when accounting for the worst-case variability.
 ---
 
 ## 6. References
@@ -188,3 +224,10 @@ testOptimizedSort         avgt   10   0.050 ± 0.005  ms/op
 ---
 
 **Lab completed!** # Optimizing-a-Web-Application
+
+---
+### Sample Images
+![./images/jprofiler.png](./images/jprofiler.png)
+
+![./images/console-1.png](./images/console-1.png)
+
